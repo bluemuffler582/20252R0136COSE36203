@@ -1,0 +1,15 @@
+step=0, reward=0.056
+step=20, reward=0.053
+step=40, reward=0.052
+step=60, reward=0.057
+step=80, reward=0.057
+step=100, reward=0.056
+step=120, reward=0.057
+step=140, reward=0.058
+step=160, reward=0.062
+step=180, reward=0.060
+step=200, reward=0.060
+Terminated at step 203
+
+Env: HumanoidWalkBackward-v0
+Total episode reward (scaled): 11.61
