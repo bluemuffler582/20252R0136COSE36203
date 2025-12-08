@@ -8,6 +8,7 @@ import torch
 from env.turn_right_env import HumanoidTurnRightEnv
 from env.turn_left_env import HumanoidTurnLeftEnv
 from env.walk_backward_env import HumanoidWalkBackwardEnv
+from env.balance_env import HumanoidBalanceEnv  
 
 
 
@@ -30,6 +31,10 @@ def parse_args_ppo() -> argparse.Namespace:
     parser.add_argument("--learning-rate", type=float, default=1e-4, help="Learning rate")
     parser.add_argument("--reward-scale", type=float, default=0.01, help="Reward scaling")
     parser.add_argument("--render-epoch", type=int, default=20, help="Render every n-th epoch")
+
+    parser.add_argument("--duration", type=float, default=5.0,
+                    help="Video duration in seconds.")
+    
     return parser.parse_args()
 
 
@@ -158,6 +163,30 @@ def make_env(env_id, reward_scaling=0.01, render=False, fps=30):
         # Apply global reward scaling (same as your TurnLeft/Right)
         env = gym.wrappers.TransformReward(env, lambda r: r * reward_scaling)
         return env
+
+    if env_id == "HumanoidBalance-v0":
+        common_kwargs = dict(
+            env_id="Humanoid-v5",
+            target_height=1.25,   # you can tweak this later
+            max_steps=1000,
+        )
+
+        if render:
+            env = HumanoidBalanceEnv(
+                render_mode="rgb_array",
+                **common_kwargs,
+            )
+            env.metadata["render_fps"] = fps
+        else:
+            env = HumanoidBalanceEnv(
+                render_mode=None,
+                **common_kwargs,
+            )
+
+        # apply the same global reward scaling
+        env = gym.wrappers.TransformReward(env, lambda r: r * reward_scaling)
+        return env
+
 
 
     # Default: original behaviour (e.g. Humanoid-v5 walking forward)
