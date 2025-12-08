@@ -7,13 +7,18 @@ import gymnasium as gym
 from lib.agent_ppo import PPOAgent
 from lib.utils import parse_args_ppo, make_env
 
+from pathlib import Path
+
+# This file lives in rl/, so BASE_DIR is rl/
+BASE_DIR = Path(__file__).resolve().parent      # .../PPO-Humanoid/rl
+CKPT_DIR = BASE_DIR / "ckpts"                  # .../PPO-Humanoid/rl/ckpts
+
 
 def make_env_for_video(env_id: str, reward_scale: float, fps: int = 30):
     """
     Create a single environment with render_mode='rgb_array' using the same
     make_env logic as training (so it works for Humanoid-v5, HumanoidTurnRight-v0, etc.).
     """
-    # render=True -> make_env will set render_mode='rgb_array'
     env = make_env(env_id, reward_scaling=reward_scale, render=True, fps=fps)
     return env
 
@@ -36,7 +41,6 @@ if __name__ == "__main__":
 
     dur_str = str(int(duration_sec))
     video_filename = f"ppo_demo_{args.env}_dur{dur_str}s.mp4"
-    # sanitize ':' if any appears in env name (just in case)
     video_filename = video_filename.replace(":", "-")
     video_path = os.path.join(video_folder, video_filename)
     # =============================
@@ -50,19 +54,20 @@ if __name__ == "__main__":
     # ===== 2) Build agent & load checkpoint =====
     agent = PPOAgent(obs_dim, action_dim).to(device)
 
-    # Map env name -> checkpoint path (relative to ./ckpts)
+    # Map env name -> relative checkpoint path under rl/ckpts
     ckpt_map = {
-        "Humanoid-v5": "walk_forward/best.pt",
+        "Humanoid-v5":             "walk_forward/best.pt",
         "HumanoidWalkBackward-v0": "walk_backward/best.pt",
-        "HumanoidTurnRight-v0": "turn_right/best.pt",
-        "HumanoidTurnLeft-v0": "turn_left/best.pt",
-        "HumanoidBalance-v0": "balance/best.pt",   # ⬅️ add this line
+        "HumanoidTurnRight-v0":    "turn_right/best.pt",
+        "HumanoidTurnLeft-v0":     "turn_left/best.pt",
+        "HumanoidBalance-v0":      "balance/best.pt",
     }
 
     if args.env not in ckpt_map:
         raise ValueError(f"No checkpoint mapping registered for env '{args.env}'")
 
-    checkpoint_path = os.path.join("ckpts", ckpt_map[args.env])
+    # Build full path: rl/ckpts/<skill>/best.pt
+    checkpoint_path = CKPT_DIR / ckpt_map[args.env]
     print(f"[INFO] Loading checkpoint from: {checkpoint_path}")
 
     checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
@@ -84,8 +89,7 @@ if __name__ == "__main__":
 
     # ===== 4) Rollout & record =====
     for step in range(max_steps):
-        # write current frame
-        frame = env.render()          # RGB
+        frame = env.render()
         frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         writer.write(frame_bgr)
 

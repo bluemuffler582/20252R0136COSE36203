@@ -7,6 +7,12 @@ import argparse
 from models import SkillLanguageModel
 from param_extractor import extract_params
 
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+DEFAULT_CKPT = SCRIPT_DIR / "checkpoints" / "best_model.pt"
+
+
 # confidence 기반 거부 기준
 REJECTION_THRESHOLD = 0.5
 
@@ -17,7 +23,13 @@ SUPPORTED_SKILLS = ["walk", "turn"]
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--text", type=str, required=True, help="자연어 명령어")
-    parser.add_argument("--checkpoint", type=str, default="checkpoints/best_model.pt")
+    #parser.add_argument("--checkpoint", type=str, default="checkpoints/best_model.pt")
+    parser.add_argument(
+        "--checkpoint",
+        type=str,
+        default=str(DEFAULT_CKPT),
+        help="Path to model checkpoint",
+    )
     parser.add_argument("--output", type=str, choices=["text", "json"], default="json")
     args = parser.parse_args()
     
