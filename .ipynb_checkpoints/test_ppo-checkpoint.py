@@ -52,10 +52,11 @@ if __name__ == "__main__":
 
     # Map env name -> checkpoint path (relative to ./ckpts)
     ckpt_map = {
-        "Humanoid-v5": "wak_forward/best.pt",
-        "HumanoidWalkBackward-v0": "wallk_backward/best.pt",
+        "Humanoid-v5": "walk_forward/best.pt",
+        "HumanoidWalkBackward-v0": "walk_backward/best.pt",
         "HumanoidTurnRight-v0": "turn_right/best.pt",
         "HumanoidTurnLeft-v0": "turn_left/best.pt",
+        "HumanoidBalance-v0": "balance/best.pt",   # ⬅️ add this line
     }
 
     if args.env not in ckpt_map:
