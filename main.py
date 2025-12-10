@@ -8,20 +8,18 @@ from typing import Dict, Any
 # =========================
 
 def call_llm(text: str) -> Dict[str, Any]:
-    """
-    Call the language model and return a dict like:
-    {
-      "text": "...",
-      "skill": "walk" | "turn" | "reject" | ...,
-      "params": { ... }
-    }
-    """
-    result = subprocess.run(
-        ["python", "llm/predict.py", "--text", text],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    try:
+        result = subprocess.run(
+            ["python", "llm/predict.py", "--text", text],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print("\n[LLM ERROR] Subprocess failed")
+        print("STDOUT:\n", e.stdout)
+        print("STDERR:\n", e.stderr)
+        raise
 
     stdout = result.stdout.strip()
     print("\n[LLM raw output]")
@@ -51,7 +49,7 @@ def run_skill(pred: Dict[str, Any]) -> None:
     # ----- walk -----
     if skill == "walk":
         direction = params.get("direction", "forward")
-        steps = params.get("steps", 3)
+        steps = params.get("steps", 5)
 
         # Simple mapping: "steps" -> duration (seconds)
         # You can tune this; for now 1 step ≈ 1s
@@ -81,7 +79,7 @@ def run_skill(pred: Dict[str, Any]) -> None:
 
         # Map angle → duration. Tune this constant as you like.
         # Here: 90 degrees ≈ 2 seconds.
-        base_duration_for_90 = 2.0
+        base_duration_for_90 = 4.0
         duration = base_duration_for_90 * (angle / 90.0)
 
         if direction == "left":
@@ -101,10 +99,15 @@ def run_skill(pred: Dict[str, Any]) -> None:
             str(duration),
         ]
 
-    # ----- balance (if/when you add it in the LLM) -----
-    elif skill == "balance":
-        # if LLM ever outputs skill="balance"
+    # ----- balance & recover_balance -----
+    elif skill in ("balance", "recover_balance"):
+        # Both skills use the same HumanoidBalance-v0 environment / ckpt
         duration = float(params.get("duration", 3.0))
+
+        # (Optional) Different default for recover_balance
+        if skill == "recover_balance" and "duration" not in params:
+            duration = 5.0  # e.g., shorter recovery window
+
         env_name = "HumanoidBalance-v0"
 
         cmd = [

@@ -11,13 +11,15 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_CKPT = SCRIPT_DIR / "checkpoints" / "best_model.pt"
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_PATH = BASE_DIR / "checkpoints" / "best_model.pt"
 
 
 # confidence 기반 거부 기준
 REJECTION_THRESHOLD = 0.5
 
 # 현재 로봇이 실제로 지원하는 스킬
-SUPPORTED_SKILLS = ["walk", "turn"]
+SUPPORTED_SKILLS = ["walk", "turn", "recover_balance"]
 
 
 def main():
