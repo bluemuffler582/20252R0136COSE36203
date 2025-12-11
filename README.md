@@ -1,3 +1,46 @@
+cose362-machine_learning/
+│
+├── llm/                   # Language model component
+│   ├── checkpoints/       # Stored LLM weights
+│   ├── data/              # Annotated text → skill/params
+│   ├── models/            # Model definitions / wrappers
+│   ├── dataset.py
+│   ├── evaluate.py
+│   ├── param_extractor.py
+│   ├── predict.py
+│   ├── train.py
+│   ├── test_model.py
+│   ├── QUICKSTART.md
+│   ├── README.md
+│   └── requirements.txt
+│
+├── llm_results/           # screenshots of llm outputs
+│
+├── rl/                    # Reinforcement Learning code
+│   │
+│   ├── ckpts/             # best and last saved model weights per skill
+│   │
+│   ├── envs/              # contains specific environments per skill (custom reward definitions)
+│   │
+│   ├── lib/               # has the agent and network definitions and hyperparameters
+│   │
+│   ├── videos_train/      # videos of training per skill per 20 epochs
+│   │
+│   ├── train_ppo.py       # train model depending on environment
+│   ├── test_ppo.py        # run trained models
+│   ├── test_ppo_chain.py  # attempted to run sequence skill 
+│   └── __init__.py
+│
+├── rl_results/            # videos of execution of skills 
+│
+├── videos_eval/           # where the vdeos are saved after running main.py
+│
+├── main.py                # High-level glue: LLM → RL → execution (end-to-end execution results)
+├── demo.mp4               # example run of main.py
+└── README.md              
+
+
+
 # AWS Humanoid RL Environment Setup (Complete Guide)
 
 This guide explains how to configure an AWS DLAMI instance for Humanoid Reinforcement Learning with MuJoCo, Gymnasium, PyTorch, and LLM-based command parsing.
