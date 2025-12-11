@@ -152,7 +152,7 @@ cd ~/SageMaker/new_robotics/PPO-Humanoid
 pip install     transformers>=4.30.0     numpy>=1.24.0     pandas>=2.0.0     scikit-learn>=1.3.0     tqdm>=4.65.0     tokenizers     accelerate     safetensors
 ```
 
-### Additional installs (redundant but kept as requested):
+### Additional installs (redundant but kept as requested)
 ```
 pip install transformers datasets numpy pandas scikit-learn tqdm
 pip install tokenizers
