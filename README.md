@@ -1,3 +1,4 @@
+```text
 cose362-machine_learning/
 │
 ├── llm/                         # Language model component
@@ -21,22 +22,21 @@ cose362-machine_learning/
 │   ├── envs/                    # Custom MuJoCo environments per skill
 │   ├── lib/                     # PPO agent, networks, hyperparameters
 │   ├── videos_train/            # Videos generated during RL training
-│   ├── train_ppo.py             # Train PPO depending on selected environment
+│   ├── train_ppo.py             # Train PPO depending on environment
 │   ├── test_ppo.py              # Run trained models + save evaluation videos
-│   ├── test_ppo_chain.py        # (Experimental) multi-skill chained execution
+│   ├── test_ppo_chain.py        # Experimental: sequential multi-skill run
 │   └── __init__.py
 │
-├── rl_results/                  # Videos + logs from RL skill execution
+├── rl_results/                  # RL logs, metrics, execution videos
 │
-├── videos_eval/                 # Final evaluation videos (after main.py)
+├── videos_eval/                 # Final evaluation videos
 │
-├── main.py                      # Glue: LLM → RL → execution pipeline
+├── main.py                      # Glue: LLM → RL → execution
 │
-├── demo.mp4                     # Example end-to-end demonstration
+├── demo.mp4                     # Example humanoid demo
 │
 └── README.md
-
-
+```
 
 
 # AWS Humanoid RL Environment Setup (Complete Guide)
