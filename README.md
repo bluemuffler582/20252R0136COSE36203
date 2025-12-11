@@ -1,42 +1,46 @@
+# Project Structure 
+
 ```text
 cose362-machine_learning/
 │
-├── llm/                         # Language model component
-│   ├── checkpoints/             # Stored LLM weights
-│   ├── data/                    # Annotated text → skill/params
-│   ├── models/                  # Model definitions / wrappers
-│   ├── dataset.py               # Loads dataset for LLM training
-│   ├── evaluate.py              # Evaluate LLM accuracy
-│   ├── param_extractor.py       # Extracts numeric parameters (steps, angles)
-│   ├── predict.py               # Inference: text → {skill, params}
-│   ├── train.py                 # Fine-tunes the LLM
-│   ├── test_model.py            # Quick test of LLM output
-│   ├── QUICKSTART.md            # Quick guide for LLM
-│   ├── README.md                # Documentation for LLM module
-│   └── requirements.txt
+├── llm/                       # Language model (SkillLanguageModel)
+│   ├── data/                  # Dataset
+│   │   └── train_data.json    # Training data
+│   ├── models/                # Model definitions
+│   │   ├── __init__.py
+│   │   └── skill_model.py     # SkillLanguageModel implementation
+│   ├── checkpoints/           # Saved model weights (auto-generated)
+│   ├── dataset.py             # Dataset loader
+│   ├── train.py               # Training script
+│   ├── evaluate.py            # Evaluation script
+│   ├── predict.py             # Inference script (text → skill + params)
+│   ├── test_model.py          # Dataset/model sanity test
+│   ├── requirements.txt       # Dependencies for LLM module
+│   └── README.md              # Documentation for LLM module
 │
-├── llm_results/                 # Screenshots and logs of LLM outputs
+├── llm_results/               # Screenshots and logs of LLM outputs
 │
-├── rl/                          # Reinforcement Learning code
-│   ├── ckpts/                   # Best & last saved PPO weights per skill
-│   ├── envs/                    # Custom MuJoCo environments per skill
-│   ├── lib/                     # PPO agent, networks, hyperparameters
-│   ├── videos_train/            # Videos generated during RL training
-│   ├── train_ppo.py             # Train PPO depending on environment
-│   ├── test_ppo.py              # Run trained models + save evaluation videos
-│   ├── test_ppo_chain.py        # Experimental: sequential multi-skill run
+├── rl/                        # Reinforcement Learning code
+│   ├── ckpts/                 # Best & last saved PPO weights per skill
+│   ├── envs/                  # Custom MuJoCo environments per skill
+│   ├── lib/                   # PPO agent, networks, hyperparameters
+│   ├── videos_train/          # Videos generated during RL training
+│   ├── train_ppo.py           # Train PPO depending on environment
+│   ├── test_ppo.py            # Run trained models + save evaluation videos
+│   ├── test_ppo_chain.py      # Experimental sequential/multi-skill execution
 │   └── __init__.py
 │
-├── rl_results/                  # RL logs, metrics, execution videos
+├── rl_results/                # RL training/evaluation results
 │
-├── videos_eval/                 # Final evaluation videos
+├── videos_eval/               # Final evaluation videos (.mp4)
 │
-├── main.py                      # Glue: LLM → RL → execution
+├── main.py                    # High-level glue: LLM → RL → execution
 │
-├── demo.mp4                     # Example humanoid demo
+├── demo.mp4                   # Example end-to-end demonstration
 │
-└── README.md
+└── README.md                  # Main documentation
 ```
+
 
 
 # AWS Humanoid RL Environment Setup (Complete Guide)
