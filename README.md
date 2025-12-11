@@ -1,43 +1,41 @@
 cose362-machine_learning/
 │
-├── llm/                   # Language model component
-│   ├── checkpoints/       # Stored LLM weights
-│   ├── data/              # Annotated text → skill/params
-│   ├── models/            # Model definitions / wrappers
-│   ├── dataset.py
-│   ├── evaluate.py
-│   ├── param_extractor.py
-│   ├── predict.py
-│   ├── train.py
-│   ├── test_model.py
-│   ├── QUICKSTART.md
-│   ├── README.md
+├── llm/                         # Language model component
+│   ├── checkpoints/             # Stored LLM weights
+│   ├── data/                    # Annotated text → skill/params
+│   ├── models/                  # Model definitions / wrappers
+│   ├── dataset.py               # Loads dataset for LLM training
+│   ├── evaluate.py              # Evaluate LLM accuracy
+│   ├── param_extractor.py       # Extracts numeric parameters (steps, angles)
+│   ├── predict.py               # Inference: text → {skill, params}
+│   ├── train.py                 # Fine-tunes the LLM
+│   ├── test_model.py            # Quick test of LLM output
+│   ├── QUICKSTART.md            # Quick guide for LLM
+│   ├── README.md                # Documentation for LLM module
 │   └── requirements.txt
 │
-├── llm_results/           # screenshots of llm outputs
+├── llm_results/                 # Screenshots and logs of LLM outputs
 │
-├── rl/                    # Reinforcement Learning code
-│   │
-│   ├── ckpts/             # best and last saved model weights per skill
-│   │
-│   ├── envs/              # contains specific environments per skill (custom reward definitions)
-│   │
-│   ├── lib/               # has the agent and network definitions and hyperparameters
-│   │
-│   ├── videos_train/      # videos of training per skill per 20 epochs
-│   │
-│   ├── train_ppo.py       # train model depending on environment
-│   ├── test_ppo.py        # run trained models
-│   ├── test_ppo_chain.py  # attempted to run sequence skill 
+├── rl/                          # Reinforcement Learning code
+│   ├── ckpts/                   # Best & last saved PPO weights per skill
+│   ├── envs/                    # Custom MuJoCo environments per skill
+│   ├── lib/                     # PPO agent, networks, hyperparameters
+│   ├── videos_train/            # Videos generated during RL training
+│   ├── train_ppo.py             # Train PPO depending on selected environment
+│   ├── test_ppo.py              # Run trained models + save evaluation videos
+│   ├── test_ppo_chain.py        # (Experimental) multi-skill chained execution
 │   └── __init__.py
 │
-├── rl_results/            # videos of execution of skills 
+├── rl_results/                  # Videos + logs from RL skill execution
 │
-├── videos_eval/           # where the vdeos are saved after running main.py
+├── videos_eval/                 # Final evaluation videos (after main.py)
 │
-├── main.py                # High-level glue: LLM → RL → execution (end-to-end execution results)
-├── demo.mp4               # example run of main.py
-└── README.md              
+├── main.py                      # Glue: LLM → RL → execution pipeline
+│
+├── demo.mp4                     # Example end-to-end demonstration
+│
+└── README.md
+
 
 
 
